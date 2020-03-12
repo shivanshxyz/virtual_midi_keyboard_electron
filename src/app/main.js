@@ -83,3 +83,14 @@ function midiHandler(action) {
     state = nextState;
 }
 
+// WebServer
+const HOSTNAME = "0.0.0.0";
+const PORT = process.env.PORT || 0;
+
+if (PORT !== 0) {
+  server = new SocketServer(HOSTNAME, PORT, PUBLIC_PATH);
+  server.setState(state);
+  server.on("action", (action) => {
+    recvAction(action);
+  });
+}
