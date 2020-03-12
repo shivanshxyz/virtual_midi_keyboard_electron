@@ -24,7 +24,7 @@ export default class MIDIDevice {
     }
     this::operations.didMIDIPortOpen();
   }
-  
+
   close() {
     this::operations.willMIDIPortClose();
     if (this.midiInput !== null) {
@@ -37,3 +37,5 @@ export default class MIDIDevice {
     }
     this::operations.didMIDIPortClose();
   }
+
+  
