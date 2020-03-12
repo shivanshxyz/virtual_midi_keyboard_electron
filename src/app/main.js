@@ -26,3 +26,34 @@ app.on("window-all-closed", () => {
   }
 });
 
+app.on("ready", () => {
+    mainWindow = new BrowserWindow({ width: 480, height: 160 });
+    mainWindow.loadURL(`file://${ PUBLIC_PATH }/index.html`);
+    mainWindow.setTitle(DEVICE_NAME);
+  
+    mainWindow.on("closed", () => {
+      mainWindow = null;
+    });
+  
+    midiDevice.open();
+    midiDevice.setState(state);
+});
+
+app.on("quit", () => {
+    midiDevice.close();
+});
+  
+store.subscribe(() => {
+    const nextState = store.getState();
+  
+    updateState(nextState);
+    midiDevice.setState(nextState);
+    if (server) {
+      server.setState(nextState);
+    }
+});
+  
+  ipcMain.on(types.SEND_ACTION, (_, action) => {
+    recvAction(action);
+});
+
