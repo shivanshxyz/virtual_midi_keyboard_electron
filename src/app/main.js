@@ -1,0 +1,11 @@
+import path from "path";
+import { app, ipcMain, BrowserWindow  } from "electron";
+import { createStore, applyMiddleware, bindActionCreators } from "redux";
+import { createPatch } from "rfc6902";
+import inject from "../common/middleware/inject";
+import reducers from "./reducers";
+import MIDIDevice from "./midi/MIDIDevice";
+import SocketServer from "./server/SocketServer";
+import * as actionCreators from "./actions";
+import * as types from "../common/ActionTypes";
+import { DEVICE_NAME } from "../common/constants";
