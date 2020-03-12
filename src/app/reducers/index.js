@@ -43,3 +43,24 @@ export default (state = initState, action) => {
   }
   return state;
 };
+
+export function midiChannel(value) {
+    return clamp(value, 0, 15);
+  }
+  
+  export function velocity(value) {
+    return clamp(value, 0, 127);
+  }
+  
+  export function octave(value) {
+    return clamp(value, 0, 8);
+  }
+  
+  export function velocityShift(velocity, shift) {
+    if (shift === -1 && 125 <= velocity) {
+      velocity = 120;
+    } else {
+      velocity += shift * 20;
+    }
+    return clamp(velocity, 1, 127);
+  }
