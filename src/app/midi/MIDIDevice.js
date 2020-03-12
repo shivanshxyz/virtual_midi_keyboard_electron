@@ -38,4 +38,17 @@ export default class MIDIDevice {
     this::operations.didMIDIPortClose();
   }
 
-  
+  setState(nextState) {
+    this::operations.setState(nextState);
+  }
+
+  doAction(action) {
+    this::operations.doAction(action, ::this.sendMessage);
+  }
+
+  sendMessage(data) {
+    if (this.midiOutput !== null) {
+      this.midiOutput.sendMessage(data);
+    }
+  }
+}
