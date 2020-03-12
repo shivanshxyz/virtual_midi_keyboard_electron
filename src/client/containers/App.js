@@ -49,3 +49,76 @@ class App extends Component {
     window.removeEventListener("keydown", this.onKeyDown);
     window.removeEventListener("keyup", this.onKeyUp);
   }
+
+  onResize() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  }
+
+  onTouchStart(e) {
+    e.preventDefault();
+  }
+
+  onTouchEnd(e) {
+    e.preventDefault();
+  }
+
+  onKeyDown(e) {
+    keyDown(e.keyCode, this.props);
+  }
+
+  onKeyUp(e) {
+    keyUp(e.keyCode, this.props);
+  }
+
+  onMIDIChannelSelect(index) {
+    this.props.actions.midiChannelSet(index);
+  }
+
+  onNoteOn(noteNumber) {
+    this.props.actions.noteOn(noteNumber, this.props.velocity);
+  }
+
+  onNoteOff(noteNumber) {
+    this.props.actions.noteOff(noteNumber);
+  }
+
+  onOctaveSelect(index) {
+    this.props.actions.octaveSet(index);
+  }
+
+  onVelocitySelect(index) {
+    this.props.actions.velocitySet([ 1, 20, 40, 60, 80, 100, 120, 127 ][index]);
+  }
+
+  render() {
+    const width  = window.innerWidth;
+    const height = window.innerHeight;
+    const style  = {};
+
+    if (width < height * 3.3333) {
+      style.width  = width;
+      style.height = width / 3.3333;
+      style.margin = `${ (height - style.height) / 2 }px 0`;
+    } else {
+      style.width  = height * 3.3333;
+      style.height = height;
+      style.margin = `0 ${ (width - style.width) / 2 }px`;
+    }
+
+    const { octave } = this.props;
+    const cNoteNumber = octave * 12 + 24;
+
+    return (
+      <svg className="app" style={ style } viewBox={ `0 0 ${ WIDTH } ${ HEIGHT }` }>
+        <ColorDefs />
+        <FrontPanel />
+        <OctaveViewer { ...this.props } x={ 650 } y={ 45 } onSelect={ this.onOctaveSelect }/>
+        <VelocityViewer { ...this.props } x={ 800 } y={ 45 } onSelect={ this.onVelocitySelect }/>
+        <MIDIChannelViewer { ...this.props } x={ 960 } y={ 45 } onSelect={ this.onMIDIChannelSelect} />
+        <PianoKeyboard { ...this.props } x={ 20 } y={ 90 } cNoteNumber={ cNoteNumber } onNoteOn={ this.onNoteOn } onNoteOff={ this.onNoteOff }/>
+      </svg>
+    );
+  }
+}
+
+export default connect(state => state)(App);
