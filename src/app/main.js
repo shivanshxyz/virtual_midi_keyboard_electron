@@ -57,3 +57,29 @@ store.subscribe(() => {
     recvAction(action);
 });
 
+function midiHandler(action) {
+    midiDevice.doAction(action);
+  }
+  
+  function recvAction(action) {
+    store.dispatch(action);
+  }
+  
+  function updateState(nextState) {
+    if (nextState === state) {
+      return;
+    }
+    const patch = createPatch(state, nextState);
+  
+    if (patch.length) {
+      if (mainWindow) {
+        mainWindow.webContents.send(types.APPLY_PATCH, patch);
+      }
+      if (server) {
+        server.applyPatch(patch);
+      }
+    }
+  
+    state = nextState;
+}
+
