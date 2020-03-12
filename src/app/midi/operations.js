@@ -39,4 +39,15 @@ export function recvMessage([ st, d1, d2 ], actions) {
   
   export function didMIDIPortClose() {}
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+function noteOn(noteNumber, velocity) {
+    return [ 0x90 + state.midiChannel, noteNumber, velocity ];
+  }
   
+  function noteOff(noteNumber) {
+    return [ 0x80 + state.midiChannel, noteNumber, 0x00 ];
+  }
+  
+  function allNoteOff() {
+    return [ 0xb0 + state.midiChannel, 0x7b, 0x00 ];
+  }
