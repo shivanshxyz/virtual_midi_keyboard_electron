@@ -1,0 +1,26 @@
+import midi from "midi";
+import * as operations from "./operations";
+
+export default class MIDIDevice {
+  constructor(deviceName, actions) {
+    this.deviceName = deviceName;
+    this.actions = actions;
+    this.midiInput = null;
+    this.midiOutput = null;
+  }
+
+  open() {
+    this::operations.willMIDIPortOpen();
+    if (this.midiInput === null) {
+      this.midiInput = new midi.input();
+      this.midiInput.openVirtualPort(this.deviceName);
+      this.midiInput.on("message", (_, data) => {
+        this::operations.recvMessage(data, this.actions);
+      });
+    }
+    if (this.midiOutput === null) {
+      this.midiOutput = new midi.output();
+      this.midiOutput.openVirtualPort(this.deviceName);
+    }
+    this::operations.didMIDIPortOpen();
+  }
