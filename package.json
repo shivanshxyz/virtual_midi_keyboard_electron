@@ -24,7 +24,7 @@
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
-    "rfc6902": "^1.2.2",
+    "rfc6902": "^3.0.4",
     "socket.io": "^1.5.0"
   },
   "devDependencies": {
