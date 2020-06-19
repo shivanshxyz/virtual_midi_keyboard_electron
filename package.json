@@ -19,7 +19,7 @@
     "is-electron": "^2.0.0",
     "json-touch-patch": "^0.11.0",
     "midi": "^0.9.5",
-    "nmap": "^0.9.0",
+    "nmap": "^1.1.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
