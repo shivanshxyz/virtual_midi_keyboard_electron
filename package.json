@@ -43,7 +43,7 @@
     "power-assert": "^1.4.1",
     "react-addons-test-utils": "^15.3.2",
     "run-with-mocha": "^1.0.0",
-    "sinon": "^1.17.6",
+    "sinon": "^9.2.4",
     "watchify": "^3.7.0"
   },
   "engines": {
